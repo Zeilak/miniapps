@@ -1,3 +1,4 @@
+using JsonShop.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +25,18 @@ namespace JsonShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+                options.Cookie.HttpOnly = true;
+            });
+
+            services.AddSingleton<IProductDB, ProductDB>();
+            services.AddSingleton<ICartDB, CartDB>();
+            services.AddSingleton<IUserDB, UserDB>();
+            services.AddScoped<IUserAuthService, UserAuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,9 +55,11 @@ namespace JsonShop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseMiddleware<AuthUserMiddleware>();
+
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
