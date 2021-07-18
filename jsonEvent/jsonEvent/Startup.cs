@@ -1,3 +1,4 @@
+using jsonEvent.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,7 @@ namespace jsonEvent
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IEventDB, EventDB>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,13 +30,13 @@ namespace jsonEvent
 
             app.UseRouting();
 
-            app.UseMiddleware<AuthUserMiddleware>();
+            app.UseMiddleware<JsonEventRouting>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("/add - отправить событие, /check - проверить события");
                 });
             });
         }
