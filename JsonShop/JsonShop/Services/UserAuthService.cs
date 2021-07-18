@@ -33,6 +33,7 @@ namespace JsonShop.Services
         }
         public void Auth(HttpContext context)
         {
+            //
             var value = context.Request.Cookies["UserId"];
             int uid = Int32.Parse(value);
             if (value == null || _userDB.TryUser(uid))

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace JsonShop
 {
+    /// <summary>
+    /// используется для аутентификации пользователя
+    /// </summary>
     public class AuthUserMiddleware
     {
         private readonly RequestDelegate _next;

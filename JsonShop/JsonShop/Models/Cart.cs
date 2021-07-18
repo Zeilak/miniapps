@@ -50,12 +50,22 @@ namespace JsonShop.Models
         {
             return price + cartItem.Count * product.Price;
         }
+        /// <summary>
+        /// сумма цены всех товаров в корзине
+        /// </summary>
+        /// <param name="productDB"></param>
+        /// <returns></returns>
         public double Price(IProductDB productDB)
         {
             double price = 0;
             CartEnum<double>(ref price, PriceFunc, productDB);
             return price;
         }
+        /// <summary>
+        /// Лист продуктов в корзине
+        /// </summary>
+        /// <param name="productDB"></param>
+        /// <returns></returns>
         public List<Product> ProductsInCart(IProductDB productDB)
         {
             List<Product> products = new List<Product>();

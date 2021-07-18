@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace JsonShop.Services
 {
+    /// <summary>
+    /// хранение корзин, у одного пользователя не больше одной корзины, нет логики
+    /// </summary>
     public interface ICartDB
     {
         List<Cart> Carts{get;}

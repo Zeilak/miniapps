@@ -1,8 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "magazin - не журнал";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Привет пряникам! (не выпечке)</h1>
+    <h1>основные запросы:</h1>
+    <ul class="list-group">
+        <li class="list-group-item">catalog/all - все продукты,</li>
+        <li class="list-group-item">catalog/id - один продукт по его id,</li>
+        <li class="list-group-item">cart/get - корзина</li>
+        <li class="list-group-item">cart/products - продукты из корзины</li>
+        <li class="list-group-item">cart/add - добавить продукт в корзину, возвращает корзину</li>
+        <li class="list-group-item">cart/delete - удалить продукт из корзины, возвращает корзину</li>
+        <li class="list-group-item">cart/buy - купить (удалить все из корзины)</li>
+        <li class="list-group-item"></li>
+    </ul>
 </div>

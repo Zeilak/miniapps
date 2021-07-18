@@ -27,12 +27,12 @@ namespace JsonShop.Controllers
         }
 
         [HttpGet]
-        public JsonResult CartPrice()
+        public JsonResult Price()
         {
             Cart cart;
             if(!GetCart(out cart, _auth.UserId))
             {
-                return Json(0);
+                throw new Exception("User or cart not found");
             }
             else
             {
@@ -40,29 +40,62 @@ namespace JsonShop.Controllers
             }
         }
         [HttpGet]
-        public JsonResult ProductsFullInfo()
+        public JsonResult Products()
         {
             Cart cart;
             if (!GetCart(out cart, _auth.UserId))
             {
-                return Json(0);
+                throw new Exception("User or cart not found");
             }
             else
             {
                 return Json(cart.ProductsInCart(_productDB));
             }
         }
+        [HttpGet]
+        public JsonResult Get()
+        {
+            Cart cart;
+            if (!GetCart(out cart, _auth.UserId))
+            {
+                throw new Exception("User or cart not found");
+            }
+            else
+            {
+                return Json(cart.Items);
+            }
+        }
+        public JsonResult Add(int productId, int count)
+        {
+            Cart cart;
+            if (!GetCart(out cart, _auth.UserId))
+                throw new Exception("User or cart not found");
 
+            cart.AddItem(productId, count);
+            _cartDB.UpdateCart(cart);
+            return Json(cart);
+        }
+        public JsonResult Delete(int productId, int count)
+        {
+            Cart cart;
+            if (!GetCart(out cart, _auth.UserId))
+                throw new Exception("User or cart not found");
+
+            cart.DeleteItem(productId, count);
+            _cartDB.UpdateCart(cart);
+            return Json(cart);
+        }
         [HttpGet]
         public IActionResult Buy()
         {
+            // тут должна быть оплата, добавление в список заказов и т.д.
 
             _cartDB.DeleteAllItems(_auth.UserId);
             return Ok();
         }
 
         [HttpGet]
-        public IActionResult hehe()
+        public IActionResult test()
         {
             Cart cart = new Cart(_auth.UserId);
             cart.AddItem(1, 3);
